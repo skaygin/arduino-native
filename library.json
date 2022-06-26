@@ -1,0 +1,23 @@
+{
+  "name": "ArduinoNative",
+  "version": "0.1.0",
+  "keywords": "native,arduino,unit,test",
+  "description": "Library to compile, debug and test platformio projects in native environment without connecting any Arduino board.",
+  "authors":
+  [
+    {
+        "name": "Serkan KAYGIN",
+        "url": "https://github.com/skaygin"
+    }
+  ],
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/skaygin/ArduinoNative.git"
+  },
+  "frameworks": "arduino",
+  "platforms": 
+  [
+    "atmelavr"
+  ]
+}
