@@ -1,5 +1,5 @@
-#include "Arduino.h"
-#include "arduino/HardwareSerial.h"
+#include "../Arduino.h"
+#include "../HardwareSerial.h"
 
 HardwareSerial::HardwareSerial(
     volatile uint8_t *ubrrh, volatile uint8_t *ubrrl,

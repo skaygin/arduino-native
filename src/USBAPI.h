@@ -21,10 +21,12 @@
 #define __USBAPI__
 
 #include <inttypes.h>
-#include <avr/pgmspace.h>
-#include <avr/eeprom.h>
-#include <avr/interrupt.h>
-#include <util/delay.h>
+
+//__AVR_Native__
+#include "avr/pgmspace.h"
+#include "avr/eeprom.h"
+#include "avr/interrupt.h"
+#include "util/delay.h"
 
 typedef unsigned char u8;
 typedef unsigned short u16;
@@ -47,13 +49,13 @@ typedef unsigned long u32;
 //================================================================================
 //	USB
 
-#define EP_TYPE_CONTROL				(0x00)
-#define EP_TYPE_BULK_IN				((1<<EPTYPE1) | (1<<EPDIR))
-#define EP_TYPE_BULK_OUT			(1<<EPTYPE1)
-#define EP_TYPE_INTERRUPT_IN		((1<<EPTYPE1) | (1<<EPTYPE0) | (1<<EPDIR))
-#define EP_TYPE_INTERRUPT_OUT		((1<<EPTYPE1) | (1<<EPTYPE0))
-#define EP_TYPE_ISOCHRONOUS_IN		((1<<EPTYPE0) | (1<<EPDIR))
-#define EP_TYPE_ISOCHRONOUS_OUT		(1<<EPTYPE0)
+#define EP_TYPE_CONTROL (0x00)
+#define EP_TYPE_BULK_IN ((1 << EPTYPE1) | (1 << EPDIR))
+#define EP_TYPE_BULK_OUT (1 << EPTYPE1)
+#define EP_TYPE_INTERRUPT_IN ((1 << EPTYPE1) | (1 << EPTYPE0) | (1 << EPDIR))
+#define EP_TYPE_INTERRUPT_OUT ((1 << EPTYPE1) | (1 << EPTYPE0))
+#define EP_TYPE_ISOCHRONOUS_IN ((1 << EPTYPE0) | (1 << EPDIR))
+#define EP_TYPE_ISOCHRONOUS_OUT (1 << EPTYPE0)
 
 class USBDevice_
 {
@@ -62,7 +64,7 @@ public:
 	bool configured();
 
 	void attach();
-	void detach();	// Serial port goes down too...
+	void detach(); // Serial port goes down too...
 	void poll();
 	bool wakeupHost(); // returns false, when wakeup cannot be processed
 
@@ -83,7 +85,7 @@ struct ring_buffer;
 #define SERIAL_BUFFER_SIZE 64
 #endif
 #endif
-#if (SERIAL_BUFFER_SIZE>256)
+#if (SERIAL_BUFFER_SIZE > 256)
 #error Please lower the CDC Buffer size
 #endif
 
@@ -91,6 +93,7 @@ class Serial_ : public Stream
 {
 private:
 	int peek_buffer;
+
 public:
 	Serial_() { peek_buffer = -1; };
 	void begin(unsigned long);
@@ -103,7 +106,7 @@ public:
 	virtual int availableForWrite(void);
 	virtual void flush(void);
 	virtual size_t write(uint8_t);
-	virtual size_t write(const uint8_t*, size_t);
+	virtual size_t write(const uint8_t *, size_t);
 	using Print::write; // pull in write(str) and write(buf, size) from Print
 	operator bool();
 
@@ -137,19 +140,20 @@ public:
 	uint8_t numbits();
 	bool dtr();
 	bool rts();
-	enum {
+	enum
+	{
 		ONE_STOP_BIT = 0,
 		ONE_AND_HALF_STOP_BIT = 1,
 		TWO_STOP_BITS = 2,
 	};
-	enum {
+	enum
+	{
 		NO_PARITY = 0,
 		ODD_PARITY = 1,
 		EVEN_PARITY = 2,
 		MARK_PARITY = 3,
 		SPACE_PARITY = 4,
 	};
-
 };
 extern Serial_ Serial;
 
@@ -173,35 +177,35 @@ typedef struct
 //================================================================================
 //	MSC 'Driver'
 
-int		MSC_GetInterface(uint8_t* interfaceNum);
-int		MSC_GetDescriptor(int i);
-bool	MSC_Setup(USBSetup& setup);
-bool	MSC_Data(uint8_t rx,uint8_t tx);
+int MSC_GetInterface(uint8_t *interfaceNum);
+int MSC_GetDescriptor(int i);
+bool MSC_Setup(USBSetup &setup);
+bool MSC_Data(uint8_t rx, uint8_t tx);
 
 //================================================================================
 //================================================================================
 //	CSC 'Driver'
 
-int		CDC_GetInterface(uint8_t* interfaceNum);
-int		CDC_GetDescriptor(int i);
-bool	CDC_Setup(USBSetup& setup);
+int CDC_GetInterface(uint8_t *interfaceNum);
+int CDC_GetDescriptor(int i);
+bool CDC_Setup(USBSetup &setup);
 
 //================================================================================
 //================================================================================
 
-#define TRANSFER_PGM		0x80
-#define TRANSFER_RELEASE	0x40
-#define TRANSFER_ZERO		0x20
+#define TRANSFER_PGM 0x80
+#define TRANSFER_RELEASE 0x40
+#define TRANSFER_ZERO 0x20
 
-int USB_SendControl(uint8_t flags, const void* d, int len);
-int USB_RecvControl(void* d, int len);
-int USB_RecvControlLong(void* d, int len);
+int USB_SendControl(uint8_t flags, const void *d, int len);
+int USB_RecvControl(void *d, int len);
+int USB_RecvControlLong(void *d, int len);
 
-uint8_t	USB_Available(uint8_t ep);
+uint8_t USB_Available(uint8_t ep);
 uint8_t USB_SendSpace(uint8_t ep);
-int USB_Send(uint8_t ep, const void* data, int len);	// blocking
-int USB_Recv(uint8_t ep, void* data, int len);		// non-blocking
-int USB_Recv(uint8_t ep);							// non-blocking
+int USB_Send(uint8_t ep, const void *data, int len); // blocking
+int USB_Recv(uint8_t ep, void *data, int len);		 // non-blocking
+int USB_Recv(uint8_t ep);							 // non-blocking
 void USB_Flush(uint8_t ep);
 
 #endif

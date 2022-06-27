@@ -1,4 +1,4 @@
-name: CiCd
+name: Test
 
 on: [workflow_dispatch]
 
@@ -7,7 +7,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest]
         example: [src/main.cpp]
 
     steps:

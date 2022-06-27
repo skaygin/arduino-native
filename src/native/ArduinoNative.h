@@ -21,4 +21,21 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
-#include "native/EepromNative.h"
+//#pragma once
+
+#define __AVR_Native__
+
+#define SERIAL_TX_BUFFER_SIZE 64
+#define SERIAL_RX_BUFFER_SIZE 64
+
+#if !defined(UBRRH) && !defined(UBRR0H) && !defined(USBCON)
+#define UBRRH
+#define UBRR1H
+#define UBRR2H
+#define UBRR3H
+//#define USBCON
+#endif
+
+#include <stdint.h>
+
+//#include "arduino/Arduino.h"

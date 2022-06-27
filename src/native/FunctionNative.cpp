@@ -1,7 +1,7 @@
 
 // Inspired from FabioBatSilva/ArduinoFake
 
-#include "Arduino.h"
+#include "../Arduino.h"
 
 void pinMode(uint8_t pin, uint8_t mode)
 {
