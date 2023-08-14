@@ -1,5 +1,5 @@
 {
-  "name": "arduino-native",
+  "name": "ArduinoNative",
   "version": "0.1.4",
   "keywords": "native,arduino,unit,test",
   "description": "Library to compile, debug and test platformio projects in native environment without connecting any Arduino board.",
