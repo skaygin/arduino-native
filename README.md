@@ -1,4 +1,4 @@
-# ArduinoNative
+# Arduino Native
 
 Library to compile, debug and test platformio projects in native environment without connecting any Arduino board.
 
